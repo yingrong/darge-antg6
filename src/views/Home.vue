@@ -9,9 +9,13 @@
           mode="horizontal"
           :style="{ lineHeight: '64px' }"
         >
-          <a-menu-item key="1">首页</a-menu-item>
+          <a-menu-item key="1">
+            <router-link to="/">首页</router-link>
+          </a-menu-item>
           <a-menu-item key="2">功能</a-menu-item>
-          <a-menu-item key="3">关于</a-menu-item>
+          <a-menu-item key="3">
+            <router-link to="/about">关于</router-link>
+          </a-menu-item>
         </a-menu>
       </a-layout-header>
       <a-layout-content style="padding: 0 50px">
@@ -23,7 +27,7 @@
         </div>
       </a-layout-content>
       <a-layout-footer style="text-align: center">
-        ©2024 Created by Your Company
+        2024 Created by Your Company
       </a-layout-footer>
     </a-layout>
   </div>
