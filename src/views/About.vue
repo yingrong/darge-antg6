@@ -16,10 +16,10 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'About'
-}
+<script lang="ts" setup>
+import { ref } from 'vue'
+
+const selectedKeys = ref(['1'])
 </script>
 
 <style scoped>
