@@ -16,8 +16,8 @@ let graph: any = null
 // 初始化数据
 const data = {
   nodes: [
-    { id: 'node1', label: '指标1' },
-    { id: 'node2', label: '指标2' },
+    { id: 'node1', label: '指标1' , data: {label: 'lable1'}},
+    { id: 'node2', label: '指标2' , data: {label: 'lable2'}},
   ],
   edges: [
     { source: 'node1', target: 'node2' },
@@ -37,13 +37,31 @@ onMounted(() => {
     // 启用节点分组功能
     groupByTypes: true,
     // 默认节点配置
-    defaultNode: {
-      size: [80, 40],
-      type: 'rect',
+    node: {
+      type: 'html',
       style: {
-        fill: '#DEE9FF',
-        stroke: '#5B8FF9',
-      },
+        size: [100, 40],
+        innerHTML: (d: { data: { location: any; label: any; ip: any; }; }) => {
+          const {
+            data: { location, label, ip },
+          } = d;
+
+          return `
+            <div 
+              style="
+                width:100%; 
+                height: 60%; 
+                color: #646cff;
+                user-select: none;
+                display: flex; 
+                padding: 10px;
+                border-width: 10px;
+                "
+            >
+                <span>${label}</span>
+            </div>`;
+        },
+      }
     },
     // 默认边配置
     defaultEdge: {
@@ -54,16 +72,14 @@ onMounted(() => {
     },
     // 布局配置
     layout: {
-      type: 'dagre',
+      type: 'antv-dagre',
       rankdir: 'TB',
       align: 'DL',
       nodesep: 20,
       ranksep: 50,
     },
     // 内置交互
-    modes: {
-      default: ['drag-canvas', 'zoom-canvas', 'drag-node'],
-    },
+    behaviors: ['drag-canvas', 'zoom-canvas', 'drag-node'],
     data
   })
 
@@ -92,6 +108,7 @@ onUnmounted(() => {
 .back-link {
   padding: 16px;
 }
+
 #container {
   width: 100%;
   height: calc(100vh - 100px);
