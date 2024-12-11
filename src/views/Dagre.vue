@@ -35,7 +35,7 @@ onMounted(() => {
     width,
     height,
     // 启用节点分组功能
-    groupByTypes: true,
+    // groupByTypes: true,
     // 默认节点配置
     node: {
       type: 'html',
@@ -63,12 +63,11 @@ onMounted(() => {
         },
       }
     },
-    // 默认边配置
-    defaultEdge: {
-      type: 'line',
+    edge: {
+      type: 'cubic-vertical',
       style: {
-        stroke: '#91d5ff',
-      },
+        endArrow: true,
+      }
     },
     // 布局配置
     layout: {
@@ -79,7 +78,7 @@ onMounted(() => {
       ranksep: 50,
     },
     // 内置交互
-    behaviors: ['drag-canvas', 'zoom-canvas', 'drag-node'],
+    behaviors: ['drag-element', 'drag-canvas', 'zoom-canvas'],
     data
   })
 
