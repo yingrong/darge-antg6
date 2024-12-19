@@ -61,6 +61,18 @@ const downloadTemplate = () => {
   generateExcelTemplate();
 };
 
+function generateRandomColor(): string {
+  const hue = Math.floor(Math.random() * 360); // Random hue between 0 and 360
+  const saturation = Math.floor(Math.random() * (90 - 60 + 1)) + 60; // Random saturation between 60% and 90%
+  const lightness = Math.floor(Math.random() * (60 - 40 + 1)) + 40; // Random lightness between 40% and 60%
+  return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+}
+
+const comboStyles: { [key: string]: { color: string } } = {
+  dps1: { color: 'red' },
+  dps3: { color: 'blue' },
+}
+
 onMounted(() => {
   const container = document.getElementById('container')
   const width = container?.scrollWidth || 800
@@ -78,27 +90,36 @@ onMounted(() => {
       type: 'html',
       style: {
         size: [100, 40],
-        innerHTML: (d: { data: { location: any; label: any; ip: any; }; }) => {
-          const {
-            data: { location, label, ip },
-          } = d;
+        innerHTML: (d: { combo: string; data: {  label: any;  }; }) => {
+        const {
+          data: { label },
+          combo,
+        } = d;
 
-          return `
-            <div 
-              style="
-                width:100%; 
-                height: 100%; 
-                color: #646cff;
-                user-select: none;
-                display: flex; 
-                padding: 10px;
-                border-width: 1px;
-                border-style: solid;
-                "
-            >
-                <span>${label}</span>
-            </div>`;
-        },
+        let style = comboStyles[combo] ;
+
+        if (!style) {
+          const newColor = generateRandomColor();
+          comboStyles[combo] = { color: newColor };
+          style = comboStyles[combo];
+        }
+
+        return `
+          <div 
+            style="
+              width:100%; 
+              height: 100%; 
+              color: ${style.color || '#646cff'};
+              user-select: none;
+              display: flex; 
+              padding: 10px;
+              border-width: 1px;
+              border-style: solid;
+              "
+          >
+              <span>${label}</span>
+          </div>`;
+      },
       }
     },
     edge: {
